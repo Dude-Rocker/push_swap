@@ -1,0 +1,4 @@
+/Users/vgladush/Desktop/push_swap/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/vgladush/Desktop/push_swap/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/vgladush/Desktop/push_swap/cmake-build-debug/CMakeFiles/push_swap.dir
+/Users/vgladush/Desktop/push_swap/cmake-build-debug/CMakeFiles/checker.dir
