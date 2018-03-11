@@ -34,7 +34,7 @@ TH_OBJS	= $(TH_SRCS:.c=.o)
 CH_OBJS	= $(CH_SRCS:.c=.o)
 OBJS_PS	= $(addprefix $(OBJ_PSW), $(PS_OBJS) $(TH_OBJS))
 OBJS_CH	= $(addprefix $(OBJ_CHK), $(CH_OBJS) $(TH_OBJS))
-INC		= $(addprefix -I, $(INC_DIR))
+INC 	= $(addprefix -I, $(INC_DIR))
 
 BLK = '\x1B[0;30m'
 RED = '\x1B[0;31m'
