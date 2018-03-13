@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/11 19:52:31 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/13 22:17:03 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int 		main(void)
 {
-	ft_printf("sa\nrr\nss\n");
+	ft_printf("sa\nrr\npb\nsa\npb\nss\npa\npa\nrra\n");
 	return (0);
 }

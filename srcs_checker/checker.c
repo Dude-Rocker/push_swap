@@ -6,40 +6,67 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:03 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/11 20:20:35 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/13 21:50:54 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-//void	ps_visual(t_stack *a, t_stack *b, t_deb vs)
-//{
-//
-//}
-//
-//void	show_sw(t_stack *st, t_deb *vs)
-//{
-//
-//}
+static	void	show_sw(t_stack *s, int i, int c, int h)
+{
+	t_stack		*r;
+	int 		j;
+
+	r = s;
+	j = --i;
+	while (j--)
+		r = r->next;
+	ft_printf("%sCurrent operation", (c ? YL : ""));
+	if (h)
+		ft_printf(" (%s%d%s)", (c ? GR : ""), i + 1, (c ? YL : ""));
+	ft_printf(": %s%s", (c ? GR : ""), tranfosh(r->nb));
+	if (i)
+		ft_printf(" %sPrevious operations: %s", (c ? YL : ""), (c ? BL : ""));
+	while (i--)
+	{
+		r = s;
+		j = i;
+		while (j--)
+			r = r->next;
+		ft_printf("%s", tranfosh(r->nb));
+		if (i)
+			ft_printf(" %s<<< %s", (c ? YL : ""), (c ? BL : ""));
+	}
+	ft_printf("\n");
+}
 
 static	void	implement(t_stack **st, t_deb vs)
 {
 	t_stack		*b;
+	t_stack		*shw;
 	char 		*l;
+	int 		sum;
 
 	b = 0;
 	l = 0;
-	while (vs.oper)
+	sum = 0;
+	shw = vs.oper;
+	while (vs.oper && ++sum)
 	{
 		ft_operations(st, &b, vs.oper->nb);
-//		if (vs.visual)
-//			ps_visual(*st, b, vs);
-//		if (vs.sw)
-//			show_sw(*st, vs);
-		if (vs.sbys && get_next_line(1, &l))
-			free(l);
+		if (vs.visual)
+			ps_visual(*st, b, vs);
+		if (vs.visual && vs.sw)
+			show_sw(shw, sum, vs.color, vs.steps);
 		vs.oper = vs.oper->next;
 	}
+	if (vs.steps)
+		ft_printf("%sTotal swap-operation: %s%d\n", (vs.color ? YL : ""),
+			(vs.color ? BL : ""), sum);
+	if (!b && !check_order(*st, 0))
+		ft_printf("%sOK", (vs.color ? GR : ""));
+	else
+		ft_printf("%sKO", (vs.color ? RR : ""));
 }
 
 static	int 	opertoi(char *s)
@@ -111,7 +138,7 @@ int				main(int ac, char **av)
 	if (!crtvisoper(&vis, 0, 0))
 	{
 		ft_printf("%sError\n", (vis.color ? RD : ""));
-		ft_clearstack(st);
+		ft_clearstack(st, 0, 0);
 		return (0);
 	}
 	implement(&st, vis);

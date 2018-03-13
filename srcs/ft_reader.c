@@ -6,49 +6,30 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:47 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/11 20:14:05 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/13 17:37:09 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void			ft_clearstack(t_stack *stack)
+int			ft_clearstack(t_stack *stack, int i, int j)
 {
-	if (!stack)
-		return ;
-	if (stack->next)
-		ft_clearstack(stack->next);
-	free(stack);
-}
-
-static	int 	ft_dup_int(t_stack *s, int i)
-{
-	while (s->next)
+	if (j)
 	{
-		if (s->nb == i)
-			return (1);
-		s = s->next;
+		while (stack)
+		{
+			if (stack->nb == i)
+				return (1);
+			stack = stack->next;
+		}
+		return (0);
 	}
+	if (!stack)
+		return (0);
+	if (stack->next)
+		ft_clearstack(stack->next, 0, 0);
+	free(stack);
 	return (0);
-}
-
-static	t_stack	*ft_crtstack(char *s, int i)
-{
-	t_stack		*res;
-	int 		dig;
-
-	dig = ft_atoi(s);
-	if (*s == '-' || *s == '+')
-		i++;
-	while (ft_isdigit(s[i]))
-		i++;
-	if (s[i] || ft_strlen(s) > 11 || (ft_strlen(s) > 2 && (dig == -1 || !dig)))
-		return (0);
-	if (!(res = (t_stack *)malloc(sizeof(t_stack))))
-		return (0);
-	res->nb = dig;
-	res->next = 0;
-	return (res);
 }
 
 static	int		ft_crtvis(t_deb *vis, char *s)
@@ -74,10 +55,66 @@ static	int		ft_crtvis(t_deb *vis, char *s)
 	return (1);
 }
 
+static	int		checktrue(char *s, int d, t_stack *a, t_stack *b)
+{
+	int 		i;
+	int 		j;
+
+	i = ((s[0] == '+' || s[0] == '-') && s[1] ? 1 : 0);
+	j = (*s == '+' ? 1 : 0);
+	while (ft_isdigit(s[i]))
+		i++;
+	if (s[i] || ft_clearstack(a, d, 1) || ft_clearstack(b, d, 1))
+	{
+		ft_clearstack(a, 0, 0);
+		ft_clearstack(b, 0, 0);
+		return (0);
+	}
+	i = ft_strlen(s + j);
+	if ((s[j] != '-' && (i > 10 || d < 0 || (i == 10 && s[j] > 50))) ||
+		(s[j] == '-' && (i > 11 || d > 0 || (i == 11 && s[j + 1] > 50))))
+	{
+		ft_clearstack(a, 0, 0);
+		ft_clearstack(b, 0, 0);
+		return (0);
+	}
+	return (1);
+}
+
+static	t_stack	*ft_crtstack(char *s, t_stack *st, int u, t_stack *res)
+{
+	t_stack		*buf;
+	int			dig;
+	char		**arr;
+
+	arr = ft_strsplit(s, ' ');
+	while (arr[++u])
+	{
+		dig = ft_atoi(arr[u]);
+		if (!checktrue(arr[u], dig, st, res))
+			return (0);
+		if (!res)
+		{
+			if (!(res = (t_stack *)malloc(sizeof(t_stack))))
+				return (0);
+			buf = res;
+		}
+		else
+		{
+			if (!(buf->next = (t_stack *)malloc(sizeof(t_stack))))
+				return (0);
+			buf = buf->next;
+		}
+		buf->nb = dig;
+		buf->next = 0;
+	}
+	return (res);
+}
+
 int				ft_reader(t_stack **st, char **s, t_deb *vis, int i)
 {
 	t_stack		*tmp;
-
+	
 	tmp = 0;
 	while (vis && s[i][0] == '-' && !ft_isdigit(s[i][1]))
 	{
@@ -86,17 +123,15 @@ int				ft_reader(t_stack **st, char **s, t_deb *vis, int i)
 		if (!s[i])
 			exit(1);
 	}
-	if (!(tmp = ft_crtstack(s[i++], 0)))
+	if (!(*st = ft_crtstack(s[i++], *st, -1, 0)))
 		return (1);
-	*st = tmp;
+	tmp = *st;
 	while (s[i])
 	{
-		if (!(tmp->next = ft_crtstack(s[i++], 0)) || ft_dup_int(*st, tmp->next->nb))
-		{
-			ft_clearstack(*st);
+		while (tmp->next)
+			tmp = tmp->next;
+		if (!(tmp->next = ft_crtstack(s[i++], *st, -1, 0)))
 			return (1);
-		}
-		tmp = tmp->next;
 	}
 	return (0);
 }
