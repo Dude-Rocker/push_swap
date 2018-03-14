@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:03 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/13 21:50:54 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/14 15:24:48 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static	void	show_sw(t_stack *s, int i, int c, int h)
 {
 	t_stack		*r;
-	int 		j;
+	int			j;
 
 	r = s;
 	j = --i;
@@ -44,8 +44,8 @@ static	void	implement(t_stack **st, t_deb vs)
 {
 	t_stack		*b;
 	t_stack		*shw;
-	char 		*l;
-	int 		sum;
+	char		*l;
+	int			sum;
 
 	b = 0;
 	l = 0;
@@ -64,12 +64,12 @@ static	void	implement(t_stack **st, t_deb vs)
 		ft_printf("%sTotal swap-operation: %s%d\n", (vs.color ? YL : ""),
 			(vs.color ? BL : ""), sum);
 	if (!b && !check_order(*st, 0))
-		ft_printf("%sOK", (vs.color ? GR : ""));
+		ft_printf("%sOK\n", (vs.color ? GR : ""));
 	else
-		ft_printf("%sKO", (vs.color ? RR : ""));
+		ft_printf("%sKO\n", (vs.color ? RR : ""));
 }
 
-static	int 	opertoi(char *s)
+static	int		opertoi(char *s)
 {
 	if (!ft_strcmp(s, "sa"))
 		return (1);
@@ -96,12 +96,14 @@ static	int 	opertoi(char *s)
 	free(s);
 	return (0);
 }
+
 static	int		crtvisoper(t_deb *vis, char *ln, int i)
 {
 	t_stack		*tm;
 
 	get_next_line(0, &ln);
-	if (!(i = opertoi(ln)) || !(vis->oper = (t_stack *)malloc(sizeof(t_stack))))
+	if (!(i = opertoi(ln)) ||
+		!(vis->oper = (t_stack *)malloc(sizeof(t_stack))))
 		return (0);
 	tm = vis->oper;
 	tm->nb = i;

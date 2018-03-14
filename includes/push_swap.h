@@ -42,6 +42,7 @@ int					ft_reader(t_stack **st, char **s, t_deb *vis, int i);
 int					ft_clearstack(t_stack *stack, int i, int j);
 int 				check_order(t_stack *a, int i);
 int 				check_revorder(t_stack *a, int i);
+void				ps_visual(t_stack *a, t_stack *b, t_deb vs);
 char				*tranfosh(int i);
 
 #endif

@@ -6,14 +6,22 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/13 22:17:03 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/14 15:22:10 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int 		main(void)
+int 		main(int ac, char **av)
 {
-	ft_printf("sa\nrr\npb\nsa\npb\nss\npa\npa\nrra\n");
+	t_stack	*st;
+
+	st = 0;
+	if (ac < 2)
+		return (0);
+	if (ft_reader(&st, &av[1], 0, 0))
+		exit(ft_printf("Error\n"));
+	if (!check_order(st, 0))
+		return (0);
 	return (0);
 }
