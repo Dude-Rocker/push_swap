@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:53:02 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/13 23:55:03 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/15 17:36:54 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int 				check_order(t_stack *a, int i);
 int 				check_revorder(t_stack *a, int i);
 void				ps_visual(t_stack *a, t_stack *b, t_deb vs);
 char				*tranfosh(int i);
+t_stack				*src_end(t_stack *st);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ps_visual.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgladush <vgladush@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 21:45:00 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/14 15:08:30 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/15 23:15:44 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static	void	vis_color(t_stack *a, t_stack *b, int i)
 	ft_printf("%sGreen:   moved upward\n%sPurple:  moved down\n", GR, RD);
 	first_oper(a, b, i);
 	secon_oper(&a, &b, i);
-	while (a || (b = (b ? b->next : b)))
+	while ((b = (b ? b->next : b)) || a)
 	{
 		if (!a)
 			ft_printf("%s%16c ", WT, '|');

@@ -6,12 +6,13 @@
 #    By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/07 21:48:14 by vgladush          #+#    #+#              #
-#    Updated: 2018/03/13 19:38:36 by vgladush         ###   ########.fr        #
+#    Updated: 2018/03/15 14:45:53 by vgladush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME_CH	=	checker
 NAME_PS	=	push_swap
+NAME_IN	=	includes
 
 GC_FLGS	=	gcc -Wall -Wextra
 
@@ -56,27 +57,34 @@ LCN		=	'\x1B[1;36m'
 WHT		=	'\x1B[1;37m'
 WCR		=	'\x1B[0m'
 
-all: oper $(OBJS_PS) $(OBJS_CH)
+all: $(NAME_IN) $(NAME_PS) $(NAME_CH)
+
+$(NAME_IN): ./includes/push_swap.h
+	@rm -rf $(OBJ_PSW)
+	@rm -rf $(OBJ_CHK)
+
+$(NAME_PS): $(OBJS_PS)
 	@gcc -o $(NAME_PS) $(OBJS_PS) $(LB_LINK)
 	@echo $(GRN)$(NAME_PS) "ready"
+
+$(NAME_CH): $(OBJS_CH)
 	@gcc -o $(NAME_CH) $(OBJS_CH) $(LB_LINK)
 	@echo $(GRN)$(NAME_CH) "ready"
 
-oper:
-	# @make -C $(LB_PATH)
-	@mkdir -p $(OBJ_PSW)
-	@mkdir -p $(OBJ_CHK)
-
 $(OBJ_PSW)%.o: $(SRC_PSW)%.c
+	@mkdir -p $(OBJ_PSW)
 	@$(GC_FLGS) $(INC) -o $@ -c $<
 
 $(OBJ_PSW)%.o: $(SRC_OTH)%.c
+	@mkdir -p $(OBJ_PSW)
 	@$(GC_FLGS) $(INC) -o $@ -c $<
 
 $(OBJ_CHK)%.o: $(SRC_CHK)%.c
+	@mkdir -p $(OBJ_CHK)
 	@$(GC_FLGS) $(INC) -o $@ -c $<
 
 $(OBJ_CHK)%.o: $(SRC_OTH)%.c
+	@mkdir -p $(OBJ_CHK)
 	@$(GC_FLGS) $(INC) -o $@ -c $<
 
 clean:

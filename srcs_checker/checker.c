@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:03 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/14 15:24:48 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/14 22:46:04 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,9 @@ static	void	implement(t_stack **st, t_deb vs)
 {
 	t_stack		*b;
 	t_stack		*shw;
-	char		*l;
 	int			sum;
 
 	b = 0;
-	l = 0;
 	sum = 0;
 	shw = vs.oper;
 	while (vs.oper && ++sum)
