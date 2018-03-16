@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 21:45:00 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/15 23:15:44 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/16 22:56:08 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void			ps_visual(t_stack *a, t_stack *b, t_deb vs)
 {
 	if (vs.sbys)
 	{
-		sleep(1);
+		get_next_line(1, 0);
 		system("clear");
 	}
 	if (vs.color)

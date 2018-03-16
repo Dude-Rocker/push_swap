@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:53:02 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/15 17:36:54 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/17 00:14:48 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ typedef	struct		s_stack
 	struct	s_stack	*next;
 }					t_stack;
 
+typedef	struct		s_mos
+{
+	int 			more;
+	int 			less;
+	int 			cn;
+}					t_mos;
+
 typedef	struct		s_deb
 {
 	int				steps;
@@ -45,5 +52,9 @@ int 				check_revorder(t_stack *a, int i);
 void				ps_visual(t_stack *a, t_stack *b, t_deb vs);
 char				*tranfosh(int i);
 t_stack				*src_end(t_stack *st);
+void				src_most_small(t_mos *ms, t_stack *st);
+int					count_val_st(t_stack *st);
+int 				src_half_val(t_stack *st, int i, int step);
+t_stack				*src_define(t_stack *st, int i, inе step);
 
 #endif

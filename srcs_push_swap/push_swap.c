@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/15 23:14:11 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/16 23:38:08 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,19 @@ static	void	print_res(int i)
 		ft_printf("rrr\n");
 }
 
-static	int		oper_chek(t_stack *st, t_stack *end, int i)
+static	int		oper_chek(t_stack *st, t_stack *end, int i, t_mos ms)
 {
+	src_most_small(&ms, st);
 	end = src_end(st);
 	if (!end)
 		return (11);
-	if (i)
-	{
-		if (st->nb < st->next->nb && st->nb < end->nb)
-			return (5);
-		else if ((st->nb < st->next->nb && st->nb > end->nb) || (st->nb >
-			end->nb && st->nb > st->next->nb && st->next->nb < end->nb))
-			return (6);
-		else
-			return (1);
-	}
+	if (i && st->nb < st->next->nb && st->nb < end->nb)
+		return (5);
+	else if (i && (st->nb < st->next->nb && st->nb > end->nb) || (st->nb
+		> end->nb && st->nb > st->next->nb && st->next->nb < end->nb))
+		return (6);
+	else if (i)
+		return (1);
 	if (st->nb < end->nb)
 		return (7);
 	else if (st->nb < st->next->nb)
@@ -60,28 +58,28 @@ static	int		oper_chek(t_stack *st, t_stack *end, int i)
 	return (4);
 }
 
-static	void	ps_algo(t_stack *a, t_stack *b, int i, int j)
+static	void	ps_algo(t_stack *a, t_stack *b, int *ab, t_mos ms)
 {
 	int 		res;
 
 	while (check_order(a, 0) || b)
 	{
-		i = (!check_order(a, 0) ? 0 : oper_chek(a, 0, 1));
-		j = (!check_revorder(b, 0) ? 0 : oper_chek(b, 0, 0));
-		if (i == 11 && j == 11)
+		ab[0] = (!check_order(a, 0) ? 0 : oper_chek(a, 0, 1, ms));
+		ab[1] = (!check_revorder(b, 0) ? 0 : oper_chek(b, 0, 0, ms));
+		if (ab[0] == 11 && ab[1] == 11)
 			res = 11;
-		else if (i == 5 && j != 11)
-			res = (j ? j : i);
-		else if (i == 11)
-			res = (j && j != 4 ? j + 1 : i - 2);
-		else if ((i == 1 && j == 2) || (i == 6 && j == 7))
-			res = j + 1;
-		else if (j == 11)
-			res = (i ? i + 2 : j - 1);
-		else if (!i && !j)
+		else if (ab[0] == 5 && ab[1] != 11)
+			res = (ab[1] ? ab[1] : ab[0]);
+		else if (ab[0] == 11)
+			res = (ab[1] && ab[1] != 4 ? ab[1] + 1 : ab[0] - 2);
+		else if ((ab[0] == 1 && ab[1] == 2) || (ab[0] == 6 && ab[1] == 7))
+			res = ab[1] + 1;
+		else if (ab[1] == 11)
+			res = (ab[0] ? ab[0] + 2 : ab[1] - 1);
+		else if (!ab[0] && !ab[1])
 			res = 4;
 		else
-			res = (i ? i : j);
+			res = (ab[0] ? ab[0] : ab[1]);
 		ft_operations(&a, &b, res);
 		print_res(res);
 	}
@@ -89,8 +87,14 @@ static	void	ps_algo(t_stack *a, t_stack *b, int i, int j)
 
 int 			main(int ac, char **av)
 {
+	t_mos		ms;
 	t_stack		*st;
+	int 		ab[2];
 
+	ab[0] = 0;
+	ab[1] = 0;
+	ms.less = 0;
+	ms.more = 0;
 	st = 0;
 	if (ac < 2)
 		return (0);
@@ -98,6 +102,6 @@ int 			main(int ac, char **av)
 		exit(ft_printf("Error\n"));
 	if (!check_order(st, 0))
 		return (0);
-	ps_algo(st, 0, 0, 0);
+	ps_algo(st, 0, ab, ms);
 	return (0);
 }

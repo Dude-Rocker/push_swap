@@ -6,7 +6,7 @@
 #    By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/07 21:48:14 by vgladush          #+#    #+#              #
-#    Updated: 2018/03/15 14:45:53 by vgladush         ###   ########.fr        #
+#    Updated: 2018/03/16 23:20:09 by vgladush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LB_LINK	=	-L ./libft -lft
 
 PS_SRCS	=	push_swap.c
 
-TH_SRCS	=	ft_operations.c ft_reader.c check_order.c
+TH_SRCS	=	ft_operations.c ft_reader.c check_order.c searching.c
 
 CH_SRCS	=	checker.c ps_visual.c
 
