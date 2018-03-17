@@ -38,24 +38,37 @@ static	void	print_res(int i)
 		ft_printf("rrr\n");
 }
 
-static	int		oper_chek(t_stack *st, t_stack *end, int i, t_mos ms)
+static	int		oper_chek(t_stack *a, t_stack *end, t_stack *b, t_mos ms)
 {
-	src_most_small(&ms, st);
-	end = src_end(st);
-	if (!end)
-		return (11);
-	if (i && st->nb < st->next->nb && st->nb < end->nb)
+	src_most_small(&ms, a);
+//	end = src_end(a);
+//	if (!check_order(a, 0))
+//		return (4);
+	if (ms.less > ms.more && !b)
 		return (5);
-	else if (i && (st->nb < st->next->nb && st->nb > end->nb) || (st->nb
-		> end->nb && st->nb > st->next->nb && st->next->nb < end->nb))
+	else if (ms.less > ms.more)
+	{
+		if (src_place(b, a->nb, 1) == 1)
+			return (10);
+		else if (src_place(b, a->nb, 1) == 2)
+			return (7);
+		else
+			return (5);
+	}
+	else
 		return (6);
-	else if (i)
-		return (1);
-	if (st->nb < end->nb)
-		return (7);
-	else if (st->nb < st->next->nb)
-		return (2);
-	return (4);
+//	if (i && st->nb < st->next->nb && st->nb < end->nb)
+//		return (5);
+//	else if (i && (st->nb < st->next->nb && st->nb > end->nb) || (st->nb
+//		> end->nb && st->nb > st->next->nb && st->next->nb < end->nb))
+//		return (6);
+//	else if (i)
+//		return (1);
+//	if (st->nb < end->nb)
+//		return (7);
+//	else if (st->nb < st->next->nb)
+//		return (2);
+//	return (4);
 }
 
 static	void	ps_algo(t_stack *a, t_stack *b, int *ab, t_mos ms)
@@ -64,22 +77,33 @@ static	void	ps_algo(t_stack *a, t_stack *b, int *ab, t_mos ms)
 
 	while (check_order(a, 0) || b)
 	{
-		ab[0] = (!check_order(a, 0) ? 0 : oper_chek(a, 0, 1, ms));
-		ab[1] = (!check_revorder(b, 0) ? 0 : oper_chek(b, 0, 0, ms));
-		if (ab[0] == 11 && ab[1] == 11)
-			res = 11;
-		else if (ab[0] == 5 && ab[1] != 11)
-			res = (ab[1] ? ab[1] : ab[0]);
-		else if (ab[0] == 11)
-			res = (ab[1] && ab[1] != 4 ? ab[1] + 1 : ab[0] - 2);
-		else if ((ab[0] == 1 && ab[1] == 2) || (ab[0] == 6 && ab[1] == 7))
-			res = ab[1] + 1;
-		else if (ab[1] == 11)
-			res = (ab[0] ? ab[0] + 2 : ab[1] - 1);
-		else if (!ab[0] && !ab[1])
-			res = 4;
-		else
-			res = (ab[0] ? ab[0] : ab[1]);
+		res = oper_chek(a, 0, b, ms);
+
+//		ab[0] = (!check_order(a, 0) ? 0 : oper_chek(a, 0, b, ms));
+//		ab[1] = (!check_revorder(b, 0) ? 0 : oper_chek(b, 0, 0, ms));
+//		if (ab[0] == 11 && ab[1] == 11)
+//			res = 11;
+//		else if (ab[0] == 5 && ab[1] != 11)
+//			res = (ab[1] ? ab[1] : ab[0]);
+//		else if (ab[0] == 11)
+//			res = (ab[1] && ab[1] != 4 ? ab[1] + 1 : ab[0] - 2);
+//		else if ((ab[0] == 1 && ab[1] == 2) || (ab[0] == 6 && ab[1] == 7))
+//			res = ab[1] + 1;
+//		else if (ab[1] == 11)
+//			res = (ab[0] ? ab[0] + 2 : ab[1] - 1);
+//		else if (!ab[0] && !ab[1])
+//			res = 4;
+//		else
+//			res = (ab[0] ? ab[0] : ab[1]);
+		if (res == 4)
+		{
+			if (src_place(b, b->nb, 1) == 1)
+				res = 10;
+			else if (src_place(b, b->nb, 1) == 2)
+				res = 7;
+			else
+				res = 5;
+		}
 		ft_operations(&a, &b, res);
 		print_res(res);
 	}

@@ -55,6 +55,7 @@ t_stack				*src_end(t_stack *st);
 void				src_most_small(t_mos *ms, t_stack *st);
 int					count_val_st(t_stack *st);
 int 				src_half_val(t_stack *st, int i, int step);
-t_stack				*src_define(t_stack *st, int i, inе step);
+t_stack				*src_define(t_stack *st, int i, int step);
+int 				src_place(t_stack *st, int i, int step);
 
 #endif

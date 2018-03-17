@@ -60,6 +60,24 @@ int 		src_half_val(t_stack *st, int i, int step)
 	return (0);
 }
 
+int 		src_place(t_stack *st, int i, int step)
+{
+	int 	j;
+
+	j = count_val_st(st);
+	while (st->next)
+	{
+		if ((i > st->next->nb && i < st->nb) || (((i < st->nb && i < st->next->nb)
+			|| (i > st->nb && i > st->next->nb)) && st->next->nb > st->nb))
+			break ;
+		step++;
+		st = st->next;
+	}
+	if (!st->next)
+		return (0);
+	return ((step > j / 2) ? 1 : 2);
+}
+
 t_stack		*src_define(t_stack *st, int i, int step)
 {
 	int		end;
