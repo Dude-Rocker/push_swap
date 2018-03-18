@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:47 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/15 14:44:26 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/18 22:58:17 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static	int		ft_crtvis(t_deb *vis, char *s)
 			vis->steps = 1;
 		else if (*s == 'o')
 			vis->sw = 1;
+		else if (*s == 'd')
+			vis->debug = 1;
 		else
 			return (0);
 		s++;
@@ -114,8 +116,7 @@ static	t_stack	*ft_crtstack(char *s, t_stack *st, int u, t_stack *res)
 int				ft_reader(t_stack **st, char **s, t_deb *vis, int i)
 {
 	t_stack		*tmp;
-	
-	tmp = 0;
+
 	while (vis && s[i][0] == '-' && !ft_isdigit(s[i][1]))
 	{
 		if (!ft_crtvis(vis, s[i++]))

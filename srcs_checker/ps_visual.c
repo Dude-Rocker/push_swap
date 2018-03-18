@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 21:45:00 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/16 22:56:08 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/19 00:35:18 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,10 @@ static	void	vis_color(t_stack *a, t_stack *b, int i)
 
 void			ps_visual(t_stack *a, t_stack *b, t_deb vs)
 {
-	if (vs.sbys)
-	{
+	if (vs.sbys && !vs.debug)
 		get_next_line(1, 0);
+	if (vs.sbys || vs.debug)
 		system("clear");
-	}
 	if (vs.color)
 	{
 		vis_color(a, b, vs.oper->nb);
@@ -128,29 +127,30 @@ void			ps_visual(t_stack *a, t_stack *b, t_deb vs)
 	ft_printf("\n%12c__   ___\n%13c     b\n\n", '_', 'a');
 }
 
-char			*tranfosh(int i)
+void			ft_debuger(t_stack **a, t_stack *b, t_deb vs, int sum)
 {
-	if (i == 1)
-		return ("sa");
-	if (i == 2)
-		return ("sb");
-	if (i == 3)
-		return ("ss");
-	if (i == 4)
-		return ("pa");
-	if (i == 5)
-		return ("pb");
-	if (i == 6)
-		return ("ra");
-	if (i == 7)
-		return ("rb");
-	if (i == 8)
-		return ("rr");
-	if (i == 9)
-		return ("rra");
-	if (i == 10)
-		return ("rrb");
-	if (i == 11)
-		return ("rrr");
-	return (0);
+	char 		*ln;
+	int 		i;
+
+	while (get_next_line(1, &ln))
+	{
+		if (!ft_strcmp(ln, "exit"))
+			break ;
+		if (!(i = opertoi(ln)))
+			ft_printf("%s\nThere is no such command!: ", vs.color ? RR : "");
+		else if (++sum)
+		{
+			ft_operations(a, &b, i);
+			ps_visual(*a, b, vs);
+			ft_printf("write \"exit\" to exit, or operation: ");
+			free(ln);
+		}
+	}
+	free(ln);
+	if (vs.steps)
+		ft_printf("%sTotal swap-operation: %s%d\n", (vs.color ? YL : ""),
+			(vs.color ? BL : ""), sum);
+	i = (!b && !check_order(*a, 0) ? 1 : 0);
+	ft_printf("%s%s", (vs.color && i ? GR : ""), (vs.color && !i ? RR : ""));
+	exit(ft_printf("%s\n", i ? "OK" : "KO"));
 }

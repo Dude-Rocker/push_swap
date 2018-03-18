@@ -6,119 +6,61 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/16 23:38:08 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/18 22:51:08 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static	void	print_res(int i)
+static	void	while_more_third(t_stack **a, t_stack **b, t_mos sm, t_mos ms)
 {
-	if (i == 1)
-		ft_printf("sa\n");
-	else if (i == 2)
-		ft_printf("sb\n");
-	else if (i == 3)
-		ft_printf("ss\n");
-	else if (i == 4)
-		ft_printf("pa\n");
-	else if (i == 5)
-		ft_printf("pb\n");
-	else if (i == 6)
-		ft_printf("ra\n");
-	else if (i == 7)
-		ft_printf("rb\n");
-	else if (i == 8)
-		ft_printf("rr\n");
-	else if (i == 9)
-		ft_printf("rra\n");
-	else if (i == 10)
-		ft_printf("rrb\n");
-	else if (i == 11)
-		ft_printf("rrr\n");
-}
+	int			res;
 
-static	int		oper_chek(t_stack *a, t_stack *end, t_stack *b, t_mos ms)
-{
-	src_most_small(&ms, a);
-//	end = src_end(a);
-//	if (!check_order(a, 0))
-//		return (4);
-	if (ms.less > ms.more && !b)
-		return (5);
-	else if (ms.less > ms.more)
-	{
-		if (src_place(b, a->nb, 1) == 1)
-			return (10);
-		else if (src_place(b, a->nb, 1) == 2)
-			return (7);
-		else
-			return (5);
-	}
+	res = src_place(*b, a[0]->nb, &sm);
+	src_more_small(&ms, *a, a[0]->nb);
+	if (ms.less < ms.more && !res)
+		res = 5;
+	else if (ms.less < ms.more)
+		res = (res == 1 ? 10 : 7);
 	else
-		return (6);
-//	if (i && st->nb < st->next->nb && st->nb < end->nb)
-//		return (5);
-//	else if (i && (st->nb < st->next->nb && st->nb > end->nb) || (st->nb
-//		> end->nb && st->nb > st->next->nb && st->next->nb < end->nb))
-//		return (6);
-//	else if (i)
-//		return (1);
-//	if (st->nb < end->nb)
-//		return (7);
-//	else if (st->nb < st->next->nb)
-//		return (2);
-//	return (4);
+		res = src_frs_less(*a, *b, &sm, &ms);
+	ft_operations(a, b, res);
+	print_oper(res, 1);
 }
 
-static	void	ps_algo(t_stack *a, t_stack *b, int *ab, t_mos ms)
+static	void	ps_algo(t_stack *a, t_stack *b, t_mos sm, t_mos ms)
 {
 	int 		res;
 
-	while (check_order(a, 0) || b)
+	while (a->next->next->next)
+		while_more_third(&a, &b, sm, ms);
+	while (check_order(a, 0))
 	{
-		res = oper_chek(a, 0, b, ms);
-
-//		ab[0] = (!check_order(a, 0) ? 0 : oper_chek(a, 0, b, ms));
-//		ab[1] = (!check_revorder(b, 0) ? 0 : oper_chek(b, 0, 0, ms));
-//		if (ab[0] == 11 && ab[1] == 11)
-//			res = 11;
-//		else if (ab[0] == 5 && ab[1] != 11)
-//			res = (ab[1] ? ab[1] : ab[0]);
-//		else if (ab[0] == 11)
-//			res = (ab[1] && ab[1] != 4 ? ab[1] + 1 : ab[0] - 2);
-//		else if ((ab[0] == 1 && ab[1] == 2) || (ab[0] == 6 && ab[1] == 7))
-//			res = ab[1] + 1;
-//		else if (ab[1] == 11)
-//			res = (ab[0] ? ab[0] + 2 : ab[1] - 1);
-//		else if (!ab[0] && !ab[1])
-//			res = 4;
-//		else
-//			res = (ab[0] ? ab[0] : ab[1]);
-		if (res == 4)
-		{
-			if (src_place(b, b->nb, 1) == 1)
-				res = 10;
-			else if (src_place(b, b->nb, 1) == 2)
-				res = 7;
-			else
-				res = 5;
-		}
+		if (a->nb > a->next->nb && a->nb > a->next->next->nb)
+			res = 6;
+		else if (a->nb > a->next->nb && a->nb < a->next->next->nb)
+			res = 1;
+		else
+			res = 9;
 		ft_operations(&a, &b, res);
-		print_res(res);
+		print_oper(res, 1);
+	}
+	while (b)
+	{
+		res = src_max_b(b, ms, 1);
+		ft_operations(&a, &b, res);
+		print_oper(res, 1);
 	}
 }
 
 int 			main(int ac, char **av)
 {
-	t_mos		ms;
-	t_stack		*st;
-	int 		ab[2];
+	t_mos ms;
+	t_stack *st;
 
-	ab[0] = 0;
-	ab[1] = 0;
 	ms.less = 0;
 	ms.more = 0;
+	ms.cn = 0;
 	st = 0;
 	if (ac < 2)
 		return (0);
@@ -126,6 +68,9 @@ int 			main(int ac, char **av)
 		exit(ft_printf("Error\n"));
 	if (!check_order(st, 0))
 		return (0);
-	ps_algo(st, 0, ab, ms);
+	if (count_val_st(st) == 2)
+		ft_printf("sa\n");
+	else
+		ps_algo(st, 0, ms, ms);
 	return (0);
 }

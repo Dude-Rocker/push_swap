@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:03 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/14 22:46:04 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/19 00:22:04 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static	void	show_sw(t_stack *s, int i, int c, int h)
 	ft_printf("%sCurrent operation", (c ? YL : ""));
 	if (h)
 		ft_printf(" (%s%d%s)", (c ? GR : ""), i + 1, (c ? YL : ""));
-	ft_printf(": %s%s", (c ? GR : ""), tranfosh(r->nb));
+	ft_printf(": %s", (c ? GR : ""));
+	print_oper(r->nb, 0);
 	if (i)
 		ft_printf(" %sPrevious operations: %s", (c ? YL : ""), (c ? BL : ""));
 	while (i--)
@@ -33,7 +34,7 @@ static	void	show_sw(t_stack *s, int i, int c, int h)
 		j = i;
 		while (j--)
 			r = r->next;
-		ft_printf("%s", tranfosh(r->nb));
+		print_oper(r->nb, 0);
 		if (i)
 			ft_printf(" %s<<< %s", (c ? YL : ""), (c ? BL : ""));
 	}
@@ -58,6 +59,7 @@ static	void	implement(t_stack **st, t_deb vs)
 			show_sw(shw, sum, vs.color, vs.steps);
 		vs.oper = vs.oper->next;
 	}
+	ft_clearstack(shw, 0, 0);
 	if (vs.steps)
 		ft_printf("%sTotal swap-operation: %s%d\n", (vs.color ? YL : ""),
 			(vs.color ? BL : ""), sum);
@@ -67,7 +69,7 @@ static	void	implement(t_stack **st, t_deb vs)
 		ft_printf("%sKO\n", (vs.color ? RR : ""));
 }
 
-static	int		opertoi(char *s)
+int				opertoi(char *s)
 {
 	if (!ft_strcmp(s, "sa"))
 		return (1);
@@ -131,11 +133,14 @@ int				main(int ac, char **av)
 	vis.visual = 0;
 	vis.oper = 0;
 	vis.sw = 0;
+	vis.debug = 0;
 	if (ac < 2)
 		return (0);
 	if (ft_reader(&st, &av[1], &vis, 0))
 		exit(ft_printf("%sError\n", (vis.color ? RD : "")));
-	if (!crtvisoper(&vis, 0, 0))
+	if (vis.debug)
+		ft_debuger(&st, 0, vis, 0);
+	else if (!crtvisoper(&vis, 0, 0))
 	{
 		ft_printf("%sError\n", (vis.color ? RD : ""));
 		ft_clearstack(st, 0, 0);

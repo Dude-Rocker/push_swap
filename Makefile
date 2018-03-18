@@ -6,7 +6,7 @@
 #    By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/07 21:48:14 by vgladush          #+#    #+#              #
-#    Updated: 2018/03/16 23:20:09 by vgladush         ###   ########.fr        #
+#    Updated: 2018/03/18 01:48:48 by vgladush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ OBJ_CHK	=	./obj_checker/
 LB_PATH	=	./libft/
 LB_LINK	=	-L ./libft -lft
 
-PS_SRCS	=	push_swap.c
+PS_SRCS	=	push_swap.c searching.c
 
-TH_SRCS	=	ft_operations.c ft_reader.c check_order.c searching.c
+TH_SRCS	=	ft_operations.c ft_reader.c check_order.c
 
 CH_SRCS	=	checker.c ps_visual.c
 

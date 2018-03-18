@@ -6,25 +6,11 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 23:50:17 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/17 00:13:11 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/18 17:59:44 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-t_stack		*src_end(t_stack *st)
-{
-	t_stack	*end;
-
-	if (!st || !st->next || !st->next->next)
-		return (0);
-	while (st)
-	{
-		end = st;
-		st = st->next;
-	}
-	return (end);
-}
 
 int			count_val_st(t_stack *st)
 {
@@ -39,62 +25,28 @@ int			count_val_st(t_stack *st)
 	return (i);
 }
 
-int 		src_half_val(t_stack *st, int i, int step)
+int 		src_place(t_stack *st, int i, t_mos *ms)
 {
-	int 	j;
-
-	j = st->nb;
-	st = st->next;
-	while (i && step--)
-	{
-		if (st->nb > j)
-			return (1);
-		st = st->next;
-	}
-	while (!i && step--)
-	{
-		if (st->nb < j)
-			return (1);
-		st = st->next;
-	}
-	return (0);
-}
-
-int 		src_place(t_stack *st, int i, int step)
-{
-	int 	j;
-
-	j = count_val_st(st);
-	while (st->next)
+	ms->less = 1;
+	ms->cn = count_val_st(st);
+	while (st && st->next)
 	{
 		if ((i > st->next->nb && i < st->nb) || (((i < st->nb && i < st->next->nb)
 			|| (i > st->nb && i > st->next->nb)) && st->next->nb > st->nb))
 			break ;
-		step++;
+		ms->less += 1;
 		st = st->next;
 	}
-	if (!st->next)
+	if (!st || !st->next)
 		return (0);
-	return ((step > j / 2) ? 1 : 2);
+	return (ms->less > (ms->cn / 2) ? 1 : 2);
 }
 
-t_stack		*src_define(t_stack *st, int i, int step)
+void		src_more_small(t_mos *ms, t_stack *st, int i)
 {
-	int		end;
-
-	end = (i ? step : count_val_st(st) - step);
-	while (end--)
-		st = st->next;
-	return (st);
-}
-
-void		src_most_small(t_mos *ms, t_stack *st)
-{
-	int 	i;
-
+	ms->less = 0;
+	ms->more = 0;
 	ms->cn = count_val_st(st);
-	i = st->nb;
-	st = st->next;
 	while (st)
 	{
 		if (st->nb > i)
@@ -103,4 +55,49 @@ void		src_most_small(t_mos *ms, t_stack *st)
 			ms->less += 1;
 		st = st->next;
 	}
+}
+
+int			src_max_b(t_stack *st, t_mos ms, int i)
+{
+	ms.less = 0;
+	ms.more = st->nb;
+	ms.cn = count_val_st(st);
+	st = st->next;
+	while (st)
+	{
+		if (ms.more < st->nb)
+		{
+			ms.less = i;
+			ms.more = st->nb;
+		}
+		i++;
+		st = st->next;
+	}
+	if (!ms.less)
+		return (4);
+	return (ms.less < ms.cn / 2 ? 7 : 10);
+}
+
+int			src_frs_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
+{
+	t_stack	*buf;
+
+	buf = a;
+	bm->more = 0;
+	while (a)
+	{
+		src_more_small(am, buf, a->nb);
+		if (am->less < am->more)
+			break ;
+		a = a->next;
+		bm->more += 1;
+	}
+	am->cn = src_place(b, a->nb, bm);
+	if (!am->cn)
+		return (6);
+	else if (am->cn == 2)
+		return (8);
+	if (bm->cn - bm->less > bm->less - bm->more)
+		return (8);
+	return (6);
 }
