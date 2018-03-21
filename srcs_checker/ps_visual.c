@@ -132,6 +132,8 @@ void			ft_debuger(t_stack **a, t_stack *b, t_deb vs, int sum)
 	char 		*ln;
 	int 		i;
 
+	ps_visual(*a, b, vs);
+	ft_printf("write operation (or \"exit\" to exit): ");
 	while (get_next_line(1, &ln))
 	{
 		if (!ft_strcmp(ln, "exit"))
@@ -142,7 +144,7 @@ void			ft_debuger(t_stack **a, t_stack *b, t_deb vs, int sum)
 		{
 			ft_operations(a, &b, i);
 			ps_visual(*a, b, vs);
-			ft_printf("write \"exit\" to exit, or operation: ");
+			ft_printf("write operation (or \"exit\" to exit): ");
 			free(ln);
 		}
 	}

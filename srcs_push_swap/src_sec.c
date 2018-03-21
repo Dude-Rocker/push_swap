@@ -68,7 +68,7 @@ int 		src_most(t_stack *st, t_mos ms, t_mos rh)
 	while (st)
 	{
 		src_more_small(&ms, s, st->nb);
-		if (ms.less < ms.more)
+		if (ms.less - 2 < ms.more / 5)
 			break ;
 		st = st->next;
 		j++;
@@ -77,7 +77,7 @@ int 		src_most(t_stack *st, t_mos ms, t_mos rh)
 	while (st)
 	{
 		src_more_small(&ms, s, st->nb);
-		if (ms.less < ms.more)
+		if (ms.less - 2 < ms.more / 5)
 			rh.more = j;
 		st = st->next;
 		j++;

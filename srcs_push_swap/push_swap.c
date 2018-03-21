@@ -18,19 +18,24 @@ static	void	while_more_third(t_stack **a, t_stack **b, t_mos sm, t_mos ms)
 
 	res = src_place(*b, a[0]->nb, &sm);
 	src_more_small(&ms, *a, a[0]->nb);
-	if (ms.less < ms.more && !res)
+	if (ms.less - 2 < (ms.more / 5) && !res)
 		res = 5;
-	else if (ms.less < ms.more)
+	else if (ms.less - 2 < (ms.more / 5))
 		res = (res == 1 ? 10 : 7);
 	else
-		res = src_frs_less(*a, *b, &sm, &ms);
+	{
+		if (!src_most(*a, sm, ms))
+			res = src_frs_less(*a, *b, &sm, &ms);
+		else
+			res = src_sec_less(*a, *b, &sm, &ms);
+	}
 	ft_operations(a, b, res);
 	print_oper(res, 1);
 }
 
 static	void	ps_algo(t_stack *a, t_stack *b, t_mos sm, t_mos ms)
 {
-	int 		res;
+	int			res;
 
 	while (a->next->next->next)
 		while_more_third(&a, &b, sm, ms);
@@ -53,10 +58,10 @@ static	void	ps_algo(t_stack *a, t_stack *b, t_mos sm, t_mos ms)
 	}
 }
 
-int 			main(int ac, char **av)
+int				main(int ac, char **av)
 {
-	t_mos ms;
-	t_stack *st;
+	t_mos		ms;
+	t_stack		*st;
 
 	ms.less = 0;
 	ms.more = 0;

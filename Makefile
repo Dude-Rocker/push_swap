@@ -25,7 +25,7 @@ OBJ_CHK	=	./obj_checker/
 LB_PATH	=	./libft/
 LB_LINK	=	-L ./libft -lft
 
-PS_SRCS	=	push_swap.c searching.c
+PS_SRCS	=	push_swap.c searching.c src_sec.c
 
 TH_SRCS	=	ft_operations.c ft_reader.c check_order.c
 

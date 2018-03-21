@@ -14,7 +14,7 @@
 
 int			count_val_st(t_stack *st)
 {
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (st)
@@ -25,14 +25,14 @@ int			count_val_st(t_stack *st)
 	return (i);
 }
 
-int 		src_place(t_stack *st, int i, t_mos *ms)
+int			src_place(t_stack *st, int i, t_mos *ms)
 {
 	ms->less = 1;
 	ms->cn = count_val_st(st);
 	while (st && st->next)
 	{
-		if ((i > st->next->nb && i < st->nb) || (((i < st->nb && i < st->next->nb)
-			|| (i > st->nb && i > st->next->nb)) && st->next->nb > st->nb))
+		if ((i > st->next->nb && i < st->nb) || (((i < st->next->nb && i <
+		st->nb) || (i > st->nb && i > st->next->nb)) && st->next->nb > st->nb))
 			break ;
 		ms->less += 1;
 		st = st->next;
@@ -87,7 +87,7 @@ int			src_frs_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
 	while (a)
 	{
 		src_more_small(am, buf, a->nb);
-		if (am->less < am->more)
+		if (am->less - 2 < am->more / 5)
 			break ;
 		a = a->next;
 		bm->more += 1;
@@ -100,4 +100,35 @@ int			src_frs_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
 	if (bm->cn - bm->less > bm->less - bm->more)
 		return (8);
 	return (6);
+}
+
+int			src_sec_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
+{
+	t_stack	*buf;
+	t_stack	*tmp;
+	int 	i;
+
+	i = 0;
+	buf = a;
+	bm->more = 0;
+	tmp = a;
+	while (a)
+	{
+		src_more_small(am, buf, a->nb);
+		if (am->less - 2  < am->more / 5)
+		{
+		i = bm->more;
+			tmp = a;
+		}
+		a = a->next;
+		bm->more += 1;
+	}
+	am->cn = src_place(b, tmp->nb, bm);
+	if (!am->cn)
+		return (9);
+	else if (am->cn == 1)
+		return (11);
+	if (bm->cn - bm->less < bm->less - bm->more)
+		return (11);
+	return (9);
 }

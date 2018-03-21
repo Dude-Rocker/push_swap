@@ -56,20 +56,3 @@ void		print_oper(int i, int j)
 	if (j)
 		ft_printf("\n");
 }
-
-int 		check_revorder(t_stack *b, int i)
-{
-	if (!b || !b->next)
-		return (0);
-	i = b->nb;
-	b = b->next;
-	while (b)
-	{
-		if (b->nb < i)
-			i = b->nb;
-		else
-			return (1);
-		b = b->next;
-	}
-	return (0);
-}
