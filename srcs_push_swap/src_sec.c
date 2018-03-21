@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/18 17:14:00 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/18 17:14:00 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/21 23:36:48 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int 		src_most(t_stack *st, t_mos ms, t_mos rh)
 	while (st)
 	{
 		src_more_small(&ms, s, st->nb);
-		if (ms.less - 2 < ms.more / 5)
+		if (ms.less - 2 < ms.more / 4)
 			break ;
 		st = st->next;
 		j++;
@@ -77,7 +77,7 @@ int 		src_most(t_stack *st, t_mos ms, t_mos rh)
 	while (st)
 	{
 		src_more_small(&ms, s, st->nb);
-		if (ms.less - 2 < ms.more / 5)
+		if (ms.less - 2 < ms.more / 4)
 			rh.more = j;
 		st = st->next;
 		j++;

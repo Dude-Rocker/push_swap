@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/18 22:51:08 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/21 23:36:48 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static	void	while_more_third(t_stack **a, t_stack **b, t_mos sm, t_mos ms)
 
 	res = src_place(*b, a[0]->nb, &sm);
 	src_more_small(&ms, *a, a[0]->nb);
-	if (ms.less - 2 < (ms.more / 5) && !res)
+	if (ms.less - 2 < (ms.more / 4) && !res)
 		res = 5;
-	else if (ms.less - 2 < (ms.more / 5))
+	else if (ms.less - 2 < (ms.more / 4))
 		res = (res == 1 ? 10 : 7);
 	else
 	{

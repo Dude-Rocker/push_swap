@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 23:50:17 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/18 17:59:44 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/22 00:18:35 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			src_frs_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
 	while (a)
 	{
 		src_more_small(am, buf, a->nb);
-		if (am->less - 2 < am->more / 5)
+		if (am->less - 2 < am->more / 4)
 			break ;
 		a = a->next;
 		bm->more += 1;
@@ -115,20 +115,21 @@ int			src_sec_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
 	while (a)
 	{
 		src_more_small(am, buf, a->nb);
-		if (am->less - 2  < am->more / 5)
+		if (am->less - 2  < am->more / 4)
 		{
-		i = bm->more;
+			bm->more = i;
 			tmp = a;
 		}
 		a = a->next;
-		bm->more += 1;
+		i++;
 	}
 	am->cn = src_place(b, tmp->nb, bm);
 	if (!am->cn)
 		return (9);
 	else if (am->cn == 1)
 		return (11);
-	if (bm->cn - bm->less < bm->less - bm->more)
+	am->cn = count_val_st(buf) - bm->more;
+	if (bm->cn - am->cn < bm->less * 2)
 		return (11);
 	return (9);
 }
