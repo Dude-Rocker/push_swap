@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 23:50:06 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/21 22:25:09 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/24 00:39:18 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,11 @@ int			src_place(t_stack *st, int i, t_mos *ms, int j)
 		ms->less += 1;
 		st = st->next;
 	}
-	if (!st || !st->next)
+	if ((!st || !st->next) && j == 1)
 		return (4);
 	if (!j)
-		return (ms->less > (ms->cn / 2) ? 11 : 8);
-	return (ms->less > (ms->cn / 2) ? 9 : 6);
+		return (ms->less < ms->cn / 2 && st && st->next ? 8 : 7);
+	else if (j == 2)
+		return (ms->less > ms->cn / 2 && st && st->next ? 11 : 10);
+	return (ms->less - 1 < ms->cn / 2 ? 6 : 9);
 }

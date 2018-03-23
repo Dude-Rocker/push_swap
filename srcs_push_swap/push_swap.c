@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/21 23:36:48 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/24 00:35:13 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,25 @@ void		src_more_small(t_mos *ms, t_stack *st, int i)
 
 static	int		src_max_b(t_stack *st, t_mos *ms, int i, t_stack *a)
 {
+	t_stack		*tmp;
+	int 		j;
+
+	tmp = st;
 	while (st)
 	{
-		src_more_small(ms, st, st->nb);
+		src_more_small(ms, tmp, st->nb);
 		if (ms->more - 1 < (ms->less / 4))
 			break ;
 		i++;
 		st = st->next;
 	}
+	j = ms->cn;
 	ms->cn = st->nb;
 	if (!i)
 		return (4);
-	else if (i < ms->cn / 2)
-	{
-		if ()
-	}
-	return (i < ms->cn / 2 ? 7 : 10);
+	else if (i - 1 < j / 2)
+		return (src_place(a, st->nb, ms, 0));
+	return (src_place(a, st->nb, ms, 2));
 }
 
 static	void	while_more_third(t_stack **a, t_stack **b, t_mos ms)
@@ -53,6 +56,7 @@ static	void	while_more_third(t_stack **a, t_stack **b, t_mos ms)
 	t_stack		*s;
 
 	s = *b;
+	res = 0;
 	src_more_small(&ms, *a, a[0]->nb);
 	if (ms.less - 2 < (ms.more / 4))
 		res = 5;
