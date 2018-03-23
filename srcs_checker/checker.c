@@ -38,7 +38,7 @@ static	void	show_sw(t_stack *s, int i, int c, int h)
 		if (i)
 			ft_printf(" %s<<< %s", (c ? YL : ""), (c ? BL : ""));
 	}
-	ft_printf("\n");
+	write(1, "\n", 1);
 }
 
 static	void	implement(t_stack **st, t_deb vs)
