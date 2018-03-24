@@ -12,100 +12,108 @@
 
 #include "push_swap.h"
 
-//int			src_place(t_stack *st, int i, t_mos *ms)
-//{
-//	ms->less = 1;
-//	ms->cn = count_val_st(st);
-//	while (st && st->next)
-//	{
-//		if ((i > st->next->nb && i < st->nb) || (((i < st->next->nb && i <
-//		st->nb) || (i > st->nb && i > st->next->nb)) && st->next->nb > st->nb))
-//			break ;
-//		ms->less += 1;
-//		st = st->next;
-//	}
-//	if (!st || !st->next)
-//		return (0);
-//	return (ms->less > (ms->cn / 2) ? 1 : 2);
-//}
+void		src_more_small(t_mos *ms, t_stack *st, int i)
+{
+	ms->less = 0;
+	ms->more = 0;
+	ms->cn = count_val_st(st);
+	while (st)
+	{
+		if (st->nb > i)
+			ms->more += 1;
+		else
+			ms->less += 1;
+		st = st->next;
+	}
+}
 
+int			src_place(t_stack *st, int i, t_mos *ms, int j)
+{
+	ms->less = 1;
+	ms->cn = count_val_st(st);
+	while (st && st->next)
+	{
+		if ((i < st->next->nb && i > st->nb) || (((i > st->next->nb && i >
+		st->nb) || (i < st->nb && i < st->next->nb)) && st->next->nb < st->nb))
+			break ;
+		ms->less += 1;
+		st = st->next;
+	}
+	if ((!st || !st->next) && j == 1)
+		return (4);
+	if (!j)
+		return (ms->less < ms->cn / 2 && st && st->next ? 8 : 7);
+	else if (j == 2)
+		return (ms->less > ms->cn / 2 && st && st->next ? 11 : 10);
+	return (ms->less - 1 < ms->cn / 2 ? 6 : 9);
+}
 
+int 			src_updw_sp(t_stack *st, int i, t_mos ms, int j)
+{
+	int 		o;
+	t_stack		*tm;
 
+	o = 100;
+	tm = st;
+	while (st)
+	{
+		src_more_small(&ms, tm, st->nb);
+		if (ms.less - 2 < (ms.more / 4))
+			break ;
+		i++;
+		st = st->next;
+	}
+	st = tm;
+	while (count_val_st(st) > 5)
+		st = st->next;
+	while (st)
+	{
+		src_more_small(&ms, tm, st->nb);
+		if (ms.less - 2 < (ms.more / 4))
+			o = j;
+		j--;
+		st = st->next;
+	}
+	return (i > o ? 1 : 0);
+}
 
-//int			src_max_b(t_stack *st, t_mos ms, int i)
-//{
-//	ms.less = 0;
-//	ms.more = st->nb;
-//	ms.cn = count_val_st(st);
-//	st = st->next;
-//	while (st)
-//	{
-//		if (ms.more < st->nb)
-//		{
-//			ms.less = i;
-//			ms.more = st->nb;
-//		}
-//		i++;
-//		st = st->next;
-//	}
-//	if (!ms.less)
-//		return (4);
-//	return (ms.less < ms.cn / 2 ? 7 : 10);
-//}
+int			src_max_b(t_stack *st, t_mos *ms, int i, t_stack *a)
+{
+	t_stack		*tmp;
+	t_stack		*buf;
+	t_stack		*bt;
+	int 		j;
+	int o;
 
-//
-//int			src_frs_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
-//{
-//	t_stack	*buf;
-//
-//	buf = a;
-//	bm->more = 0;
-//	while (a)
-//	{
-//		src_more_small(am, buf, a->nb);
-//		if (am->less - 2 < am->more / 4)
-//			break ;
-//		a = a->next;
-//		bm->more += 1;
-//	}
-//	am->cn = src_place(b, a->nb, bm);
-//	if (!am->cn)
-//		return (6);
-//	else if (am->cn == 2)
-//		return (8);
-//	if (bm->cn - bm->less > bm->less - bm->more)
-//		return (8);
-//	return (6);
-//}
-//
-//int			src_sec_less(t_stack *a, t_stack *b, t_mos *am, t_mos *bm)
-//{
-//	t_stack	*buf;
-//	t_stack	*tmp;
-//	int 	i;
-//
-//	i = 0;
-//	buf = a;
-//	bm->more = 0;
-//	tmp = a;
-//	while (a)
-//	{
-//		src_more_small(am, buf, a->nb);
-//		if (am->less - 2  < am->more / 4)
-//		{
-//			bm->more = i;
-//			tmp = a;
-//		}
-//		a = a->next;
-//		i++;
-//	}
-//	am->cn = src_place(b, tmp->nb, bm);
-//	if (!am->cn)
-//		return (9);
-//	else if (am->cn == 1)
-//		return (11);
-//	am->cn = count_val_st(buf) - bm->more;
-//	if (bm->cn - am->cn < bm->less * 2)
-//		return (11);
-//	return (9);
-//}
+	tmp = st;
+	j = 5;
+	o = 100;
+	while (st)
+	{
+		src_more_small(ms, tmp, st->nb);
+		if (ms->more - 1 < (ms->less / 4))
+			break ;
+		i++;
+		st = st->next;
+	}
+	if (!i)
+		return (src_place(a, st->nb, ms, 1));
+	bt = tmp;
+	while (count_val_st(bt) > 5)
+		bt = bt->next;
+	buf = bt;
+	while (bt)
+	{
+		src_more_small(ms, tmp, st->nb);
+		if (ms->less - 2 < (ms->more / 4))
+		{
+			buf = bt;
+			o = j;
+		}
+		j--;
+		bt = bt->next;
+	}
+	if (i > o)
+		return (src_place(a, buf->nb, ms, 2));
+	return (src_place(a, st->nb, ms, 0));
+}

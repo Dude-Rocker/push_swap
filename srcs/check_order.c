@@ -56,37 +56,3 @@ void		print_oper(int i, int j)
 	if (j)
 		write(1, "\n", 1);
 }
-
-int			count_val_st(t_stack *st)
-{
-	int		i;
-
-	i = 0;
-	while (st)
-	{
-		i++;
-		st = st->next;
-	}
-	return (i);
-}
-
-int			src_place(t_stack *st, int i, t_mos *ms, int j)
-{
-	ms->less = 1;
-	ms->cn = count_val_st(st);
-	while (st && st->next)
-	{
-		if ((i < st->next->nb && i > st->nb) || (((i > st->next->nb && i >
-		st->nb) || (i < st->nb && i < st->next->nb)) && st->next->nb < st->nb))
-			break ;
-		ms->less += 1;
-		st = st->next;
-	}
-	if ((!st || !st->next) && j == 1)
-		return (4);
-	if (!j)
-		return (ms->less < ms->cn / 2 && st && st->next ? 8 : 7);
-	else if (j == 2)
-		return (ms->less > ms->cn / 2 && st && st->next ? 11 : 10);
-	return (ms->less - 1 < ms->cn / 2 ? 6 : 9);
-}

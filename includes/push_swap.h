@@ -55,5 +55,7 @@ void				print_oper(int i, int j);
 void				ft_debuger(t_stack **a, t_stack *b, t_deb vs, int sum);
 int					opertoi(char *s);
 int					src_place(t_stack *st, int i, t_mos *ms, int j);
+int 				src_updw_sp(t_stack *st, int i, t_mos ms, int j);
+int					src_max_b(t_stack *st, t_mos *ms, int i, t_stack *a);
 
 #endif

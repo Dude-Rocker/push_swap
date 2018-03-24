@@ -12,42 +12,17 @@
 
 #include "push_swap.h"
 
-void		src_more_small(t_mos *ms, t_stack *st, int i)
+int			count_val_st(t_stack *st)
 {
-	ms->less = 0;
-	ms->more = 0;
-	ms->cn = count_val_st(st);
+	int		i;
+
+	i = 0;
 	while (st)
 	{
-		if (st->nb > i)
-			ms->more += 1;
-		else
-			ms->less += 1;
-		st = st->next;
-	}
-}
-
-static	int		src_max_b(t_stack *st, t_mos *ms, int i, t_stack *a)
-{
-	t_stack		*tmp;
-	int 		j;
-
-	tmp = st;
-	while (st)
-	{
-		src_more_small(ms, tmp, st->nb);
-		if (ms->more - 1 < (ms->less / 4))
-			break ;
 		i++;
 		st = st->next;
 	}
-	j = ms->cn;
-	ms->cn = st->nb;
-	if (!i)
-		return (4);
-	else if (i - 1 < j / 2)
-		return (src_place(a, st->nb, ms, 0));
-	return (src_place(a, st->nb, ms, 2));
+	return (i);
 }
 
 static	void	while_more_third(t_stack **a, t_stack **b, t_mos ms)
@@ -60,6 +35,8 @@ static	void	while_more_third(t_stack **a, t_stack **b, t_mos ms)
 	src_more_small(&ms, *a, a[0]->nb);
 	if (ms.less - 2 < (ms.more / 4))
 		res = 5;
+	else if (src_updw_sp(*a, 0, ms, 5))
+		res = 9;
 	else
 	{
 		if (s)
@@ -95,8 +72,6 @@ static	void	ps_algo(t_stack *a, t_stack *b, t_mos ms)
 	while (b)
 	{
 		res = src_max_b(b, &ms, 0, a);
-		if (res == 4)
-			res = src_place(a, ms.cn, &ms, 1);
 		ft_operations(&a, &b, res);
 		print_oper(res, 1);
 	}
