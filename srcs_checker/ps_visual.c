@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 21:45:00 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/23 23:27:32 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/25 13:22:11 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ static	void	secon_oper(t_stack **a, t_stack **b, int i)
 
 static	void	vis_color(t_stack *a, t_stack *b, int i)
 {
-	ft_putstr("\x1B[37mWhite:  did'n move\n\x1B[36mBlue:   exchanged places\n");
+	ft_putstr("\x1B[37mWhite:  did'n move   \x1B[36mBlue:  exchanged places\n");
+	ft_putstr("\x1B[35mPurple: moved down   \x1B[32mGreen: moved upward\n");
 	ft_putstr("\x1B[33mYellow: moved due to another operation\n");
-	ft_putstr("\x1B[32mGreen:  moved upward\n\x1B[35mPurple: moved down\n");
 	first_oper(a, b, i);
 	secon_oper(&a, &b, i);
 	while ((b = (b ? b->next : b)) || a)
@@ -134,7 +134,7 @@ void			ft_debuger(t_stack **a, t_stack *b, t_deb vs, int sum)
 
 	ps_visual(*a, b, vs);
 	ft_putstr("write operation (or \"exit\" to exit): ");
-	while (get_next_line(1, &ln))
+	while (get_next_line(0, &ln))
 	{
 		if (!ft_strcmp(ln, "exit"))
 			break ;
@@ -150,7 +150,7 @@ void			ft_debuger(t_stack **a, t_stack *b, t_deb vs, int sum)
 	}
 	free(ln);
 	if (vs.steps)
-		ft_printf("%sTotal swap-operation: %s%d\n", (vs.color ? YL : ""),
+		ft_printf("%sTotal swap-operations: %s%d\n", (vs.color ? YL : ""),
 			(vs.color ? "\x1B[36m" : ""), sum);
 	i = (!b && !check_order(*a, 0) ? 1 : 0);
 	ft_printf("%s%s", (vs.color && i ? GR : ""), (vs.color && !i ? RR : ""));

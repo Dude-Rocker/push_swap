@@ -6,7 +6,7 @@
 #    By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/07 21:48:14 by vgladush          #+#    #+#              #
-#    Updated: 2018/03/23 23:27:32 by vgladush         ###   ########.fr        #
+#    Updated: 2018/03/25 22:03:05 by vgladush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ WHT		=	'\x1B[1;37m'
 WCR		=	'\x1B[0m'
 
 all: $(NAME_IN) $(NAME_PS) $(NAME_CH)
+	make -C $(LB_PATH)
 
 $(NAME_IN): ./includes/push_swap.h
 	@rm -rf $(OBJ_PSW)
@@ -101,5 +102,9 @@ fclean:
 	@rm -f $(NAME_PS)
 	@rm -f $(NAME_CH)
 	@echo $(RED)$(NAME_PS) "&" $(NAME_CH) "deleted"
+
+rand:
+	@$(GC_FLGS) randomizer/randomizer.c $(INC) $(LB_LINK) -o randomizer
+	@echo $(GRN)"randomizer ready"
 
 re: fclean all

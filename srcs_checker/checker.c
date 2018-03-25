@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:03 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/23 23:27:32 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/25 23:43:30 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static	void	implement(t_stack **st, t_deb vs)
 	}
 	ft_clearstack(shw, 0, 0);
 	if (vs.steps)
-		ft_printf("%sTotal swap-operation: %s%d\n", (vs.color ? YL : ""),
+		ft_printf("%sTotal swap-operations: %s%d\n", (vs.color ? YL : ""),
 			(vs.color ? BL : ""), sum);
 	if (!b && !check_order(*st, 0))
 		ft_printf("%sOK\n", (vs.color ? GR : ""));
@@ -101,7 +101,11 @@ static	int		crtvisoper(t_deb *vis, char *ln, int i)
 {
 	t_stack		*tm;
 
-	get_next_line(0, &ln);
+	if (!get_next_line(0, &ln))
+	{
+		free(ln);
+		return (1);
+	}
 	if (!(i = opertoi(ln)) ||
 		!(vis->oper = (t_stack *)malloc(sizeof(t_stack))))
 		return (0);

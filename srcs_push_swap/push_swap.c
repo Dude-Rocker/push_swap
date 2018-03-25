@@ -6,7 +6,7 @@
 /*   By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 19:52:31 by vgladush          #+#    #+#             */
-/*   Updated: 2018/03/24 00:35:13 by vgladush         ###   ########.fr       */
+/*   Updated: 2018/03/25 17:35:31 by vgladush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ int			count_val_st(t_stack *st)
 	return (i);
 }
 
+t_stack			*precis_fb(t_stack *st, int *i, t_stack *tm)
+{
+	int 		j;
+
+	j = *i;
+	while (j++ < 5 && st->next)
+	{
+		if (tm->nb < st->nb && (*i = 1))
+			tm = st;
+		st = st->next;
+	}
+	return (tm);
+}
+
 static	void	while_more_third(t_stack **a, t_stack **b, t_mos ms)
 {
 	int			res;
@@ -32,7 +46,7 @@ static	void	while_more_third(t_stack **a, t_stack **b, t_mos ms)
 
 	s = *b;
 	res = 0;
-	src_more_small(&ms, *a, a[0]->nb);
+	src_more_less(&ms, *a, a[0]->nb);
 	if (ms.less - 2 < (ms.more / 4))
 		res = 5;
 	else if (src_updw_sp(*a, 0, ms, 5))
@@ -56,7 +70,7 @@ static	void	ps_algo(t_stack *a, t_stack *b, t_mos ms)
 {
 	int			res;
 
-	while (a->next->next->next)
+	while (count_val_st(a) > 3 && check_order(a, 0))
 		while_more_third(&a, &b, ms);
 	while (check_order(a, 0))
 	{
