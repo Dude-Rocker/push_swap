@@ -35,7 +35,7 @@
 * ***-d*** - debug mode
 * ***-n*** - displays the number of commands used
 
-## few example:
+## few examples:
 ### without flags
 ![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/check.png)
 ### debug mode
