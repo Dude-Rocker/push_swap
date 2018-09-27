@@ -23,8 +23,9 @@
 	* rrb : reverse rotate b - shift down all elements of stack b by 1. The last element becomes the first one.
 	* rrr : rra and rrb at the same time.
 # push_swap program
+### the program finds the minimum number of commands and outputs them
 ## example:
-
+![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/ps_xmpl.png)
 # checker program
 ### my checker several flags are implemented, namely:
 * ***-v*** - visual mode
@@ -35,11 +36,15 @@
 * ***-n*** - displays the number of commands used
 
 ## few example:
-*** without flags
-*** debug mode
-*** flags: -n -c
-*** visual mode all flags are on
-
+### without flags
+![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/check.png)
+### debug mode
+![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/debug.gif)
+### flags: -n -c
+![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/checkcolor.png)
+### visual mode all flags are on
+![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/visual.gif)
 # randomaizer program
 ### This program generates the number of numbers specified in the argument, and enters them into push_swap and inserts its result into the checker
 ## example:
+![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/randomaizer.png)
