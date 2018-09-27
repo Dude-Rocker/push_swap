@@ -6,7 +6,7 @@
 #    By: vgladush <vgladush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/07 21:48:14 by vgladush          #+#    #+#              #
-#    Updated: 2018/03/25 22:03:05 by vgladush         ###   ########.fr        #
+#    Updated: 2018/09/27 23:31:12 by vgladush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ WHT		=	'\x1B[1;37m'
 WCR		=	'\x1B[0m'
 
 all: $(NAME_IN) $(NAME_PS) $(NAME_CH)
-	make -C $(LB_PATH)
+	@make -C $(LB_PATH)
 
 $(NAME_IN): ./includes/push_swap.h
 	@rm -rf $(OBJ_PSW)
@@ -89,13 +89,13 @@ $(OBJ_CHK)%.o: $(SRC_OTH)%.c
 	@$(GC_FLGS) $(INC) -o $@ -c $<
 
 clean:
-	# @make -C $(LB_PATH) clean
+	@make -C $(LB_PATH) clean
 	@rm -rf $(OBJ_PSW)
 	@rm -rf $(OBJ_CHK)
 	@echo $(LRD)"objects" $(NAME_PS) "&" $(NAME_CH) "deleted"
 
 fclean:
-	# @make -C $(LB_PATH) fclean
+	@make -C $(LB_PATH) fclean
 	@rm -rf $(OBJ_PSW)
 	@rm -rf $(OBJ_CHK)
 	@echo $(LRD)"objects" $(NAME_PS) "&" $(NAME_CH) "deleted"
