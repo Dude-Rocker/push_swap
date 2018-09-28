@@ -1,4 +1,4 @@
-# push_swap
+# [push_swap](https://github.com/Dude-Rocker/resources/blob/master/push_swap/push_swap.pdf)
 ## The school 42 project of algorithms branch
 ##### First, you need to write an algorithm that will sort the numbers using two stacks and certain commands.
 ##### Second, you need to write a program that will check whether the numbers are correctly sorted by your algorithm.
@@ -25,7 +25,7 @@
 # push_swap program
 ### the program finds the minimum number of commands and outputs them
 ## example:
-![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/ps_xmpl.png)
+![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/ps_xmpl.png)
 # checker program
 ### my checker several flags are implemented, namely:
 * ***-v*** - visual mode
@@ -37,14 +37,14 @@
 
 ## few examples:
 ### without flags
-![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/check.png)
+![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/check.png)
 ### debug mode
-![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/debug.gif)
+![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/debug.gif)
 ### flags: -n -c
-![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/checkcolor.png)
+![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/checkcolor.png)
 ### visual mode all flags are on
-![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/visual.gif)
+![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/visual.gif)
 # randomaizer program
 ### This program generates the number of numbers specified in the argument, and enters them into push_swap and inserts its result into the checker
 ## example:
-![](https://github.com/Dude-Rocker/push_swap/blob/master/examples/randomaizer.png)
+![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/randomaizer.png)
