@@ -44,7 +44,7 @@
 ![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/checkcolor.png)
 ### visual mode all flags are on
 ![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/visual.gif)
-# randomaizer program
+# randomizer program
 ### This program generates the number of numbers specified in the argument, and enters them into push_swap and inserts its result into the checker
 ## example:
 ![](https://github.com/Dude-Rocker/resources/blob/master/push_swap/randomaizer.png)
